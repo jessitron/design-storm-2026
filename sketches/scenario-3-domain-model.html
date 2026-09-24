@@ -175,7 +175,7 @@
 
   <section>
     <figure>
-      <svg viewBox="0 0 900 380" role="img" aria-label="A fish travels from Hoosier Pass through a gage and Strontia Springs Reservoir to Foothills Plant. All nodes and connections shown are real places and real tunnels; only the small provenance tag under each name says whether its reading is measured, estimated, or fabricated. A separate isolated basin has no real connection to the network at all, so no fish can reach it.">
+      <svg viewBox="0 0 900 420" role="img" aria-label="A fish travels from Hoosier Pass through a gage and Strontia Springs Reservoir to Foothills Plant. Every node and connection is a real place and a real tunnel, drawn the same way throughout. Only the numbered reading chip below each node is colored by provenance, showing whether that particular number is measured, estimated, or fabricated. A separate isolated basin has no real connection to the network at all, so it has no reading and no fish can reach it.">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -196,47 +196,53 @@
           <circle cx="-9" cy="-1.5" r="1.6" fill="var(--surface)"/>
         </g>
 
-        <!-- Hoosier Pass: a real place, its reading is Measured -->
+        <!-- Hoosier Pass: a real place. Its reading chip is Measured. -->
         <circle cx="80" cy="120" r="26" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
         <text x="80" y="164" text-anchor="middle" font-size="13" fill="currentColor">Hoosier Pass</text>
         <text x="80" y="180" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">SNOTEL</text>
-        <circle cx="55" cy="192" r="4" fill="var(--measured)"/>
-        <text x="63" y="196" font-size="10" fill="var(--measured)" class="label-mono">MEASURED</text>
+        <rect x="25" y="190" width="110" height="36" rx="8" fill="var(--measured-soft)" stroke="var(--measured)" stroke-width="1.5"/>
+        <text x="80" y="206" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">SWE 8.4 in</text>
+        <text x="80" y="220" text-anchor="middle" font-size="9" fill="var(--measured)" class="label-mono">MEASURED</text>
 
-        <!-- Gage: a real place, its reading is Measured -->
+        <!-- Gage: a real place. Its reading chip is Measured. -->
         <circle cx="260" cy="120" r="26" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
         <text x="260" y="164" text-anchor="middle" font-size="13" fill="currentColor">South Platte Gage</text>
         <text x="260" y="180" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">USGS sensor</text>
-        <circle cx="235" cy="192" r="4" fill="var(--measured)"/>
-        <text x="243" y="196" font-size="10" fill="var(--measured)" class="label-mono">MEASURED</text>
+        <rect x="205" y="190" width="110" height="36" rx="8" fill="var(--measured-soft)" stroke="var(--measured)" stroke-width="1.5"/>
+        <text x="260" y="206" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">340 CFS</text>
+        <text x="260" y="220" text-anchor="middle" font-size="9" fill="var(--measured)" class="label-mono">MEASURED</text>
 
-        <!-- Strontia: a real place, its reading is Estimated -->
+        <!-- Strontia: a real place. Its reading chip is Estimated, from Jake's model. -->
         <circle cx="460" cy="120" r="28" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
         <text x="460" y="166" text-anchor="middle" font-size="13" fill="currentColor">Strontia Springs</text>
         <text x="460" y="182" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">reservoir</text>
-        <circle cx="433" cy="194" r="4" fill="var(--estimated)"/>
-        <text x="441" y="198" font-size="10" fill="var(--estimated)" class="label-mono">ESTIMATED</text>
+        <rect x="400" y="192" width="120" height="36" rx="8" fill="var(--estimated-soft)" stroke="var(--estimated)" stroke-width="1.5"/>
+        <text x="460" y="208" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">TOC 2.1 mg/L</text>
+        <text x="460" y="222" text-anchor="middle" font-size="9" fill="var(--estimated)" class="label-mono">ESTIMATED</text>
 
-        <!-- Foothills: a real place, its reading is Measured -->
+        <!-- Foothills: a real place. Its reading chip is Measured, so Excursion means something here. -->
         <circle cx="670" cy="76" r="28" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
         <text x="670" y="46" text-anchor="middle" font-size="13" fill="currentColor">Foothills Plant</text>
-        <circle cx="640" cy="106" r="4" fill="var(--measured)"/>
-        <text x="648" y="110" font-size="10" fill="var(--measured)" class="label-mono">MEASURED</text>
-        <rect x="700" y="62" width="88" height="28" rx="14" fill="var(--accent-soft)"/>
-        <text x="744" y="80" text-anchor="middle" font-size="11" fill="var(--accent)" class="label-mono">EXCURSION?</text>
+        <rect x="610" y="112" width="120" height="36" rx="8" fill="var(--measured-soft)" stroke="var(--measured)" stroke-width="1.5"/>
+        <text x="670" y="128" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">TOC 2.3 · ALK 58</text>
+        <text x="670" y="142" text-anchor="middle" font-size="9" fill="var(--measured)" class="label-mono">MEASURED</text>
+        <rect x="700" y="60" width="94" height="26" rx="13" fill="var(--accent-soft)"/>
+        <text x="747" y="77" text-anchor="middle" font-size="10" fill="var(--accent)" class="label-mono">EXCURSION</text>
 
-        <!-- Another Plant: an equally real place, reached by an equally real tunnel — only its reading is Fabricated -->
+        <!-- Another Plant: an equally real place, reached by an equally real tunnel. Its reading chip is Fabricated -->
+        <!-- there is no lab and no documented method here, so the number itself is invented and marked as such. -->
         <circle cx="670" cy="206" r="28" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
         <text x="670" y="246" text-anchor="middle" font-size="13" fill="currentColor">Another Plant</text>
-        <circle cx="640" cy="266" r="4" fill="var(--fabricated)"/>
-        <text x="648" y="270" font-size="10" fill="var(--fabricated)" class="label-mono">FABRICATED</text>
+        <rect x="610" y="256" width="120" height="36" rx="8" fill="var(--fabricated-soft)" stroke="var(--fabricated)" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="670" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">TOC 2.0 mg/L?</text>
+        <text x="670" y="286" text-anchor="middle" font-size="9" fill="var(--fabricated)" class="label-mono">FABRICATED</text>
 
-        <!-- Isolated basin: also a real place, but no real connection reaches it, so no reading exists to tag -->
-        <circle cx="80" cy="300" r="26" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 5"/>
-        <text x="80" y="344" text-anchor="middle" font-size="13" fill="var(--ink-soft)">Some basin</text>
-        <text x="80" y="360" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">no real link · not fish-able</text>
+        <!-- Isolated basin: also a real place, but no real connection reaches it, so there is no reading at all. -->
+        <circle cx="80" cy="330" r="26" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 5"/>
+        <text x="80" y="374" text-anchor="middle" font-size="13" fill="var(--ink-soft)">Some basin</text>
+        <text x="80" y="390" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">no real link · not fish-able</text>
       </svg>
-      <figcaption>Every node and every line here is a real place and a real connection &mdash; the network is never invented. The small tag under each name is the only thing colored by provenance: it says whether the reading a fish finds there is Measured, Estimated, or Fabricated.</figcaption>
+      <figcaption>Every node and every line here is a real place and a real connection &mdash; the network is never invented. Only the numbered chip below each node carries a provenance color: it marks that specific reading, Measured, Estimated, or Fabricated, never the node or the path itself.</figcaption>
     </figure>
 
     <div class="legend">
