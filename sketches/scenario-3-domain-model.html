@@ -175,7 +175,7 @@
 
   <section>
     <figure>
-      <svg viewBox="0 0 900 420" role="img" aria-label="A fish travels from Hoosier Pass through a gage and Strontia Springs Reservoir to Foothills Plant. Every node and connection is a real place and a real tunnel, drawn the same way throughout. Only the numbered reading chip below each node is colored by provenance, showing whether that particular number is measured, estimated, or fabricated. A separate isolated basin has no real connection to the network at all, so it has no reading and no fish can reach it.">
+      <svg viewBox="0 0 900 430" role="img" aria-label="A fish travels from Hoosier Pass through a gage and Strontia Springs Reservoir to Foothills Plant. A second, unrelated real corridor runs from Grizzly Peak SNOTEL through the real Moffat Water Tunnel to Moffat Treatment Plant. Every node and connection shown, on both corridors, is a real place and a real tunnel, drawn the same way throughout. Only the numbered reading chip below each node is colored by provenance, showing whether that particular number is measured, estimated, or fabricated. Ralston Reservoir sits off to the side with no connection drawn to either corridor, so it has no reading and isn't part of any journey here.">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -186,7 +186,7 @@
         <line x1="106" y1="120" x2="234" y2="120" stroke="var(--accent)" stroke-width="4" marker-end="url(#arrow)"/>
         <line x1="286" y1="120" x2="434" y2="120" stroke="var(--accent)" stroke-width="4" marker-end="url(#arrow)"/>
         <line x1="486" y1="112" x2="642" y2="86" stroke="var(--accent)" stroke-width="4" marker-end="url(#arrow)"/>
-        <line x1="486" y1="132" x2="642" y2="196" stroke="var(--accent)" stroke-width="4" marker-end="url(#arrow)"/>
+        <line x1="166" y1="300" x2="352" y2="300" stroke="var(--accent)" stroke-width="4" marker-end="url(#arrow)"/>
 
         <!-- fish, riding the gage->reservoir leg -->
         <g transform="translate(358,120)" fill="var(--accent)">
@@ -229,20 +229,29 @@
         <rect x="700" y="60" width="94" height="26" rx="13" fill="var(--accent-soft)"/>
         <text x="747" y="77" text-anchor="middle" font-size="10" fill="var(--accent)" class="label-mono">EXCURSION</text>
 
-        <!-- Another Plant: an equally real place, reached by an equally real tunnel. Its reading chip is Fabricated -->
-        <!-- there is no lab and no documented method here, so the number itself is invented and marked as such. -->
-        <circle cx="670" cy="206" r="28" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
-        <text x="670" y="246" text-anchor="middle" font-size="13" fill="currentColor">Another Plant</text>
-        <rect x="610" y="256" width="120" height="36" rx="8" fill="var(--fabricated-soft)" stroke="var(--fabricated)" stroke-width="1.5" stroke-dasharray="3 3"/>
-        <text x="670" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">TOC 2.0 mg/L?</text>
-        <text x="670" y="286" text-anchor="middle" font-size="9" fill="var(--fabricated)" class="label-mono">FABRICATED</text>
+        <!-- Grizzly Peak SNOTEL: a real West Slope station, its own SWE reading is Measured. -->
+        <circle cx="140" cy="300" r="26" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="140" y="344" text-anchor="middle" font-size="13" fill="currentColor">Grizzly Peak</text>
+        <text x="140" y="360" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">SNOTEL</text>
+        <rect x="85" y="370" width="110" height="36" rx="8" fill="var(--measured-soft)" stroke="var(--measured)" stroke-width="1.5"/>
+        <text x="140" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">SWE 11.2 in</text>
+        <text x="140" y="400" text-anchor="middle" font-size="9" fill="var(--measured)" class="label-mono">MEASURED</text>
 
-        <!-- Isolated basin: also a real place, but no real connection reaches it, so there is no reading at all. -->
-        <circle cx="80" cy="330" r="26" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 5"/>
-        <text x="80" y="374" text-anchor="middle" font-size="13" fill="var(--ink-soft)">Some basin</text>
-        <text x="80" y="390" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">no real link · not fish-able</text>
+        <!-- Moffat Treatment Plant: reached by the real Moffat Water Tunnel. Its reading chip is Fabricated -->
+        <!-- because no soft sensor like Jake's covers this corridor, so any number here is invented. -->
+        <circle cx="370" cy="300" r="28" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <text x="370" y="346" text-anchor="middle" font-size="13" fill="currentColor">Moffat Plant</text>
+        <text x="370" y="362" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">via Moffat Tunnel</text>
+        <rect x="310" y="372" width="120" height="36" rx="8" fill="var(--fabricated-soft)" stroke="var(--fabricated)" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="370" y="388" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" class="label-mono">TOC 2.0 mg/L?</text>
+        <text x="370" y="402" text-anchor="middle" font-size="9" fill="var(--fabricated)" class="label-mono">FABRICATED</text>
+
+        <!-- Ralston Reservoir: a real place, but no route in this sketch connects it to either corridor. -->
+        <circle cx="640" cy="300" r="26" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 5"/>
+        <text x="640" y="344" text-anchor="middle" font-size="13" fill="var(--ink-soft)">Ralston Reservoir</text>
+        <text x="640" y="360" text-anchor="middle" font-size="11" fill="var(--ink-soft)" class="label-mono">not part of any journey here</text>
       </svg>
-      <figcaption>Every node and every line here is a real place and a real connection &mdash; the network is never invented. Only the numbered chip below each node carries a provenance color: it marks that specific reading, Measured, Estimated, or Fabricated, never the node or the path itself.</figcaption>
+      <figcaption>Every node and every line here is a real place and a real connection &mdash; the network is never invented, on either corridor. Moffat Plant is reached by the real Moffat Water Tunnel, but nobody has built a soft sensor for that corridor, so its reading is Fabricated while the tunnel itself is not. Only the numbered chip below each node carries a provenance color; the node and the path never do.</figcaption>
     </figure>
 
     <div class="legend">
