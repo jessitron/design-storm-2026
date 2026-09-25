@@ -27,8 +27,10 @@ _Avoid_: Edge, connection, link
 
 **Terrain**:
 The kind of physical medium a Leg's water travels through — River, Conduit,
-or Reservoir — which determines what the fish sees and feels passing through
-it, independent of the Leg's travel time or Provenance.
+Reservoir, Tunnel, Train Tunnel, and more as the source data turns up new
+scenery — which determines what the fish sees and feels passing through it,
+independent of the Leg's travel time or Provenance. An open list: name a new
+kind whenever a Leg's real character calls for one.
 _Avoid_: Environment, biome, medium
 
 **River**:
@@ -38,12 +40,24 @@ _Avoid_: Stream, creek (real Denver Water names for specific waterways, not
 the Terrain category)
 
 **Conduit**:
-A Terrain of engineered pipe. Usually backed by a Trace from OSM pipeline
-data, marked exposed or hidden per stretch. Roberts and Moffat Tunnel are
-Conduits with an Unspecified Trace: no centerline has ever been published
-for either.
+A Terrain of engineered pipe, laid rather than bored to walking scale.
+Usually backed by a Trace from OSM pipeline data, marked exposed or hidden
+per stretch.
 _Avoid_: Pipe, channel (Leg already uses "channel" loosely; Conduit is the
 precise Terrain term)
+
+**Tunnel**:
+A Terrain of bored, human- or train-scale passage through rock — walkable
+space, not a laid pipe. Aurora Rampart Tunnel No. 2 is a Tunnel with a known
+Trace; Roberts Tunnel is a Tunnel with an Unspecified one.
+_Avoid_: Bore (retired term, see Trace)
+
+**Train Tunnel**:
+A Tunnel Terrain that once carried a railroad and still shows it — tracks,
+rail-scale proportions — a different scene from a Tunnel that was never
+anything but a water passage. Moffat Tunnel is the one Leg with this
+Terrain today, its Trace Unspecified.
+_Avoid_: Rail tunnel
 
 **Reservoir**:
 A Terrain of open, still water with no single path through it — the fish
@@ -145,5 +159,5 @@ _Avoid_: Alert, threshold breach
   is a deliberately-set property (can be 0) modified by the active Regime, not derived from anything else.
 - An Unspecified Trace means one of two different things, and Trace alone
   can't tell you which: on a Reservoir, there is no single path to have; on
-  a Conduit like Roberts or Moffat Tunnel, a real path exists but has never
-  been published.
+  a Tunnel like Roberts, or a Train Tunnel like Moffat, a real path exists
+  but has never been published.
