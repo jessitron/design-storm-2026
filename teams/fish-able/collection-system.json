@@ -1,0 +1,125 @@
+{
+  "_comment": "Hand-modeled Node/Leg graph for team fish-able, using the vocabulary in CONTEXT.md. Unlike ../../water-system-3d/system.json (points + lines, generated, no graph edges), this file states which Nodes actually connect to which, including real Legs that exist but aren't drawn anywhere else in the repo. Node ids match system.json's point ids so the two files can be cross-referenced. Hand-maintained: extend it as more Legs get confirmed.",
+
+  "nodes": [
+    { "id": "res-dillon", "kind": "reservoir", "name": "Dillon Reservoir" },
+    { "id": "res-gross", "kind": "reservoir", "name": "Gross Reservoir" },
+    { "id": "res-cheesman", "kind": "reservoir", "name": "Cheesman Reservoir" },
+    { "id": "res-eleven_mile", "kind": "reservoir", "name": "Eleven Mile Canyon Reservoir" },
+    { "id": "res-antero", "kind": "reservoir", "name": "Antero Reservoir" },
+    { "id": "res-chatfield", "kind": "reservoir", "name": "Chatfield Reservoir" },
+    { "id": "res-marston", "kind": "reservoir", "name": "Marston Forebay" },
+    { "id": "res-ralston", "kind": "reservoir", "name": "Ralston Reservoir" },
+    { "id": "dam-strontia", "kind": "reservoir", "name": "Strontia Springs Dam" },
+    { "id": "dam-marston-diversion", "kind": "reservoir", "name": "Conduit 20 Diversion" },
+    { "id": "gage-06707525", "kind": "gage", "name": "Strontia Springs Sentinel Gauge" },
+    { "id": "gage-06701900", "kind": "gage", "name": "South Platte Gauge near Trumbull" },
+    { "id": "gage-09023562", "kind": "gage", "name": "Fraser River below Moffat Tunnel" },
+    { "id": "gage-09037500", "kind": "gage", "name": "Williams Fork Gauge near Parshall" },
+    { "id": "gage-06702500", "kind": "gage", "name": "North Fork Gauge at Grant" },
+    { "id": "gage-06707000", "kind": "gage", "name": "North Fork Confluence Gauge" },
+    { "id": "gage-06707500", "kind": "gage", "name": "South Platte Mainstem Gauge" },
+    { "id": "plant-foothills", "kind": "plant", "name": "Foothills Treatment Plant" },
+    { "id": "plant-marston", "kind": "plant", "name": "Marston Treatment Plant" },
+    { "id": "plant-northwater", "kind": "plant", "name": "Northwater Treatment Plant" },
+    { "id": "plant-moffat", "kind": "plant", "name": "Moffat Treatment Plant" }
+  ],
+
+  "legs": [
+    {
+      "id": "leg-roberts",
+      "from": "res-dillon", "to": "gage-06702500",
+      "terrain": "Tunnel", "trace": "known",
+      "source": "blurb: res-dillon (\"reaches Denver through the 23-mile Roberts Tunnel\") + gage-06702500 (\"just below where Roberts Tunnel water from Dillon Reservoir pours in\"); system.json line 'roberts' carries the trace."
+    },
+    {
+      "id": "leg-grant-to-confluence",
+      "from": "gage-06702500", "to": "gage-06707000",
+      "terrain": "River", "trace": "Unspecified",
+      "source": "CONFIRMED GAP, not drawn anywhere else. teams/fish-able/notes.md: \"some paths don't appear (at least in the graphic), for instance from the North Fork Gauge at Grant... to the North Fork Confluence Gauge. Jake says that exists.\""
+    },
+    {
+      "id": "leg-mainstem-to-confluence",
+      "from": "gage-06707500", "to": "gage-06707000",
+      "terrain": "River", "trace": "Unspecified",
+      "source": "blurb: gage-06707500 (\"just above the North Fork confluence\")"
+    },
+    {
+      "id": "leg-confluence-to-sentinel",
+      "from": "gage-06707000", "to": "gage-06707525",
+      "terrain": "River", "trace": "Unspecified",
+      "source": "blurb: gage-06707000 (\"joins the mainstem South Platte, 2 km above the sentinel gage\")"
+    },
+    {
+      "id": "leg-sentinel-to-strontia",
+      "from": "gage-06707525", "to": "dam-strontia",
+      "terrain": "River", "trace": "Unspecified",
+      "source": "blurb: gage-06707525 (\"last measurement point before 80% of Denver's water enters Strontia Springs Reservoir\")"
+    },
+    {
+      "id": "leg-conduit-26",
+      "from": "dam-strontia", "to": "plant-foothills",
+      "terrain": "Conduit", "trace": "known",
+      "source": "blurb: plant-foothills (\"Receives Strontia Springs water through Conduit 26\"); system.json line 'conduit-26' carries the trace."
+    },
+    {
+      "id": "leg-strontia-to-marston-diversion",
+      "from": "dam-strontia", "to": "dam-marston-diversion",
+      "terrain": "River", "trace": "Unspecified",
+      "source": "blurb: dam-marston-diversion (\"2.6 miles below Strontia Springs Dam\")"
+    },
+    {
+      "id": "leg-conduit-20",
+      "from": "dam-marston-diversion", "to": "res-marston",
+      "terrain": "Conduit", "trace": "known",
+      "source": "blurb: dam-marston-diversion (\"delivers water directly to Marston Forebay\"); system.json line 'conduit-20' carries the trace."
+    },
+    {
+      "id": "leg-marston-forebay-to-plant",
+      "from": "res-marston", "to": "plant-marston",
+      "terrain": "Conduit", "trace": "Unspecified",
+      "source": "blurb: res-marston (\"Terminal storage... beside the Marston Treatment Plant\")"
+    },
+    {
+      "id": "leg-moffat-tunnel",
+      "from": "gage-09023562", "to": "res-gross",
+      "terrain": "Train Tunnel", "trace": "Unspecified",
+      "source": "CONFIRMED GAP, not connected anywhere else even though system.json draws the tunnel's geometry as line 'moffat'. teams/fish-able/notes.md: \"Moffatt Tunnel to Gross Reservoir. CJ says it was a train tunnel, now it's Denver Water.\" Matches res-gross blurb (\"Receives Fraser River water delivered by the Moffat Tunnel via South Boulder Creek\") — South Boulder Creek isn't a Node here, so the Creek stretch is folded into this one Leg."
+    },
+    {
+      "id": "leg-gross-to-ralston",
+      "from": "res-gross", "to": "res-ralston",
+      "terrain": null, "trace": "Unspecified",
+      "source": "blurb: res-ralston (\"Gross Reservoir water is delivered here on its way to the Northwater Treatment Plant\"). Leg is real but its Terrain isn't stated anywhere in the repo yet — needs a teammate to confirm whether it's a Conduit, a Tunnel, or open channel before this can be more than null."
+    },
+    {
+      "id": "leg-ralston-to-northwater",
+      "from": "res-ralston", "to": "plant-northwater",
+      "terrain": null, "trace": "Unspecified",
+      "source": "blurb: res-ralston + plant-northwater (\"the new north system plant beside Ralston Reservoir, treating Moffat Tunnel water\")"
+    }
+  ],
+
+  "open_questions": [
+    {
+      "about": ["res-antero", "res-eleven_mile", "res-cheesman", "gage-06707500"],
+      "question": "These are real, in real river order along the upper South Platte (Antero is stated as \"the uppermost\"; Cheesman is stated as \"above the sentinel gage\"), but no blurb states the adjacency or order between them, and the real river has at least one reservoir in between (Spinney Mountain) that isn't a Node in this system at all. Left unmodeled rather than guessed — needs a teammate to confirm the actual chain before adding Legs here."
+    },
+    {
+      "about": ["gage-06701900"],
+      "question": "strontia-brief/places.json calls this \"Nearest upstream discharge gage\" to the sentinel gage, but doesn't say whether it sits on the same stretch as gage-06707000 (North Fork Confluence Gauge) or a different one. Left unconnected until that's confirmed."
+    },
+    {
+      "about": ["plant-moffat"],
+      "question": "The 1937 plant's blurb only covers its history/retirement, not what fed it. Presumably Ralston Reservoir, like Northwater, but that's not stated anywhere — left unconnected rather than assumed."
+    },
+    {
+      "about": ["res-chatfield"],
+      "question": "Not a gap: blurb explicitly says it's \"a Denver-side landmark rather than part of the supply chain,\" so it's correctly left with no Legs."
+    },
+    {
+      "about": ["gage-09037500"],
+      "question": "Not a gap: Williams Fork Gauge tracks a west-slope repayment obligation, not a physical path this Collection System's water travels, so it's correctly left with no Legs."
+    }
+  ]
+}
