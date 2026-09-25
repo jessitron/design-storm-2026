@@ -88,6 +88,10 @@ _Avoid_: Corridor, network, route (Corridor was our own earlier draft term,
 retired once the graph turned out to branch)
 
 **Journey**:
+An educational exploration of the Collection System with illustrative travel
+and independent historical Readings, or explicitly labeled Fabricated Readings,
+at each visited place; it does not track
+a parcel of water or predict changes in its water quality.
 One fish's trip through the Collection System, starting at any Node the
 viewer picks, under a chosen Episode, ending either at a treatment plant or wherever
 a Regime-closed Leg stops it. At a fork, the viewer picks which Leg the fish
@@ -100,7 +104,9 @@ One specific, named historical stretch of time — a real date range with real
 data behind it — that instantiates a Regime. A Regime (drought, snow-flush) is
 a category; it can have more than one Episode (e.g. a 2002 drought and a 2018
 drought are both Episodes of the drought Regime). The viewer picks an Episode
-by name, not just a Regime category.
+by name, not just a Regime category. Its historical date range does not limit
+Journey progression: beyond that range, the Journey continues with explicitly
+labeled Fabricated Readings based on the last available Reading.
 _Avoid_: Run, scenario, instance
 
 **Regime**:
@@ -116,7 +122,7 @@ an Episode is one real instance of it)
 
 **Reading**:
 A single number for a single parameter (TOC, alkalinity, cfs, water level,
-...), looked up for one Node on one date within an Episode, carrying its own
+...), for one Node on one Journey date, carrying its own
 Provenance. A Node's visit on a given date produces _several_ Readings, one per
 parameter, not one bundled value — so "the Reading at Foothills" is ambiguous;
 "the TOC Reading at Foothills" is not.
@@ -128,7 +134,8 @@ How a Reading came to have its number. One of four levels, in decreasing order
 of trust: **Measured** (a sensor or lab really recorded it), **Estimated**
 (computed from real data by a documented method), **Interpolated** (math filled
 in between two known Readings), **Fabricated** (no data, no method — invented,
-and must be marked as such). Provenance is a property of the Reading, never of
+and must be explicitly labeled as fabricated wherever presented, rather than
+represented as a historical observation). Provenance is a property of the Reading, never of
 the Node or the Leg: a real Node can carry a Fabricated Reading without the Node
 or the Leg leading to it being any less real.
 _Avoid_: Confidence, quality, source
@@ -142,6 +149,10 @@ _Avoid_: Alert, threshold breach
 
 - A reachable Node always has a Reading for any date a Journey visits it —
   Fabricated is the fallback of last resort, never a blank.
+- Arrival beyond the Episode's end does not end the Journey. Readings beyond
+  that date use fictional variation around the last historical value, are
+  labeled "Fabricated — not a prediction," and retain the historical Reading's
+  original date. The variation is not evidence of a physical trend.
 - Provenance is set independently per Reading. There is no rule that a Fabricated
   or Estimated Reading upstream degrades what a Measured Reading downstream can claim.
 - Excursion is a soft note, not a hard rule: it can be computed and shown for
@@ -154,9 +165,10 @@ _Avoid_: Alert, threshold breach
   of the _same_ Episode — same date range, same real data, same numbers every
   time. Fabricated Readings are generated fresh on every execution regardless
   of Episode, because nothing real backs them to begin with.
-- A Journey's "moment" advances by whole days as the fish crosses each Leg —
-  never finer, because every CSV in `data/` is daily-only. A Leg's travel time
-  is a deliberately-set property (can be 0) modified by the active Regime, not derived from anything else.
+- A Journey's "moment" advances by configured whole days as the fish crosses
+  each Leg. Travel timing is illustrative and must be clearly labeled as such;
+  it is not a physical prediction. A Leg's travel time is a deliberately-set
+  property (can be 0) modified by the active Regime, not derived from anything else.
 - An Unspecified Trace means one of two different things, and Trace alone
   can't tell you which: on a Reservoir, there is no single path to have; on
   a Tunnel like Roberts, or a Train Tunnel like Moffat, a real path exists
