@@ -1,18 +1,21 @@
 # Fish-able
 
 Bounded context for team fish-able's take on Scenario 3: visualizing a single
-journey of water and its quality data from a snow station, through the collection
-system, to a treatment plant. This is a subset of the wider repo's vocabulary —
+journey of water and its quality data from a Node the viewer picks, through
+the collection system, to a treatment plant. This is a subset of the wider
+repo's vocabulary —
 we don't model the prediction pipeline or the 3D map's data plumbing, only the
 journey itself and what makes each number on it trustworthy.
 
 ## Language
 
 **Node**:
-A real, physical place in the collection system — a snow station, streamflow
-gage, reservoir, or treatment plant — that a Journey can pass through. A Node can
+A real, physical place in the collection system — a streamflow gage,
+reservoir, or treatment plant — that a Journey can pass through. A Node can
 have more than one Leg in and more than one Leg out (confluences and forks are
-both real).
+both real). SNOTEL snow stations aren't Nodes: this context's Collection
+System starts downstream of them, at the first gage or reservoir with a flow
+or water-quality reading.
 _Avoid_: Station, facility, marker
 
 **Leg**:
@@ -71,8 +74,8 @@ _Avoid_: Corridor, network, route (Corridor was our own earlier draft term,
 retired once the graph turned out to branch)
 
 **Journey**:
-One fish's trip through the Collection System, starting at a chosen snow
-station, under a chosen Episode, ending either at a treatment plant or wherever
+One fish's trip through the Collection System, starting at any Node the
+viewer picks, under a chosen Episode, ending either at a treatment plant or wherever
 a Regime-closed Leg stops it. At a fork, the viewer picks which Leg the fish
 takes next. There is only ever one fish — "multiple Journeys running at once"
 isn't a concept this context has.
@@ -98,7 +101,7 @@ drought Regime can persist across seasons), Episode (a Regime is the category;
 an Episode is one real instance of it)
 
 **Reading**:
-A single number for a single parameter (TOC, alkalinity, SWE, cfs, water level,
+A single number for a single parameter (TOC, alkalinity, cfs, water level,
 ...), looked up for one Node on one date within an Episode, carrying its own
 Provenance. A Node's visit on a given date produces _several_ Readings, one per
 parameter, not one bundled value — so "the Reading at Foothills" is ambiguous;
