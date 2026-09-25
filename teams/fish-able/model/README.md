@@ -9,7 +9,25 @@ Run from this directory:
 npm ci
 npm run check
 npm test
+npm run build
 ```
+
+## Explore connections
+
+After building, run `python3 serve.py` from the repository root and open
+<http://localhost:8765/teams/fish-able/model/>. Rebuild after TypeScript changes;
+the generated `dist/` files are ignored by Git.
+
+Select any Node to see its outgoing Legs and click a destination to inspect it.
+The initial selection is Strontia Springs Dam, with Legs to Foothills and Conduit
+20 Diversion. A Node with no outgoing Legs says "No outgoing Legs recorded";
+this describes the recorded topology, not an operational closure or a completed
+Journey. This explorer has no Journey, Episode, travel timing or Readings.
+
+The page loads the team's `../collection-system.json`. Load or validation errors
+are displayed with a retry action. Both Denver Water notices accompany the page.
+
+## Collection System
 
 The first capability is Collection System topology: identify a Node and find its
 outgoing Legs. Construction rejects duplicate identities and unknown endpoints;
@@ -29,7 +47,7 @@ const destinations = choices.map(leg => system.node(leg.to));
 The types use the existing glossary and graph's `id`, `from`, and `to` vocabulary.
 Tests exercise the documented Strontia fork. Structural validation does not prove
 that a connection exists in the real world; evidence remains in
-`../collection-system.json`. A loader, evidence and Trace types, Journey state,
+`../collection-system.json`. Evidence and Trace types, Journey state,
 Regime timing and Readings are subsequent modeling steps. No new decisions about
 fabrication or replay are made here.
 
@@ -45,7 +63,9 @@ package. Each has a domain layer and a place for stateless orchestration:
 src/
   collection-system/
     domain/collection-system.ts
-    orchestration/README.md
+    adapters/collection-system-json.ts
+    orchestration/load-collection-system.ts
+  presentation/explorer.ts
   journey/
     domain/README.md
     orchestration/README.md
@@ -93,19 +113,23 @@ The CollectionSystem example above is executable with the Node/Leg fixtures in
 resolves their destinations, Foothills and Conduit 20 Diversion. No Journey moves
 and no Readings are selected by this topology query.
 
-For an eventual loading use case, orchestration could coordinate these steps:
+The browser loading use case coordinates these steps:
 
 ```ts
-// Illustrative future orchestration body; loader and adapter are not implemented.
-// Dependencies would be supplied by the caller.
-const source = await loadSource();
-const {nodes, legs} = translateSource(source); // external format -> domain inputs
-return new CollectionSystem(nodes, legs);    // domain enforces topology invariants
+import {loadCollectionSystem} from './src/collection-system/orchestration/load-collection-system.js';
+
+const system = await loadCollectionSystem(async () => {
+  const response = await fetch('../collection-system.json');
+  if (!response.ok) throw new Error(`Topology load failed: ${response.status}`);
+  return response.json();
+});
 ```
 
 The result can then be passed to the direct query shown above. Duplicate identities
 or missing endpoints still fail inside CollectionSystem, regardless of the source.
-This is placement guidance, not a new loader interface or pass-through wrapper.
+The adapter checks the external shape and translates only Node and Leg fields.
+`nodes()` exposes an immutable listing for the selector. Presentation then calls
+`node` and `legsFrom` directly; orchestration retains no selection state.
 
 Journey and Readings operation signatures await concrete use cases. Reading-anchor,
 fabrication, replay and SNOTEL questions remain deferred. This restructuring adds

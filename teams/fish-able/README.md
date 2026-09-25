@@ -6,7 +6,12 @@
 - [`CONTEXT.md`](CONTEXT.md): domain vocabulary.
 - [`collection-system.json`](collection-system.json): hand-modeled topology and evidence.
 
-CollectionSystem topology is implemented. Journey and Readings have reserved
+The working [connections explorer](model/index.html) uses the fresh model. Run
+`npm ci && npm run build` from `teams/fish-able/model/`, then `python3 serve.py`
+from the repository root and open <http://localhost:8765/teams/fish-able/model/>.
+Select a Node and inspect its outgoing Legs and destinations.
+
+CollectionSystem topology and loading are implemented. Journey and Readings have reserved
 domain/orchestration directories; their behavior is not implemented yet.
 Reading-anchor, fabrication, replay and SNOTEL questions remain deferred.
 

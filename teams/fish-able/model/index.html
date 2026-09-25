@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore the recorded Nodes and directed Legs in Fish-able's Collection System.">
+    <title>Fish-able | Explore the Collection System</title>
+    <link rel="stylesheet" href="src/presentation/explorer.css">
+    <script type="module" src="dist/src/presentation/explorer.js"></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__wash" aria-hidden="true"></div>
+      <div class="page-width hero__content">
+        <p class="eyebrow">Fish-able · Collection System</p>
+        <h1>Follow the water’s recorded connections.</h1>
+        <p class="hero__intro">
+          Choose a Node to see the directed Legs recorded from it. Select a destination
+          to keep exploring the topology.
+        </p>
+        <p class="hero__scope"><span class="scope-dot" aria-hidden="true"></span>Explore the Collection System</p>
+      </div>
+    </header>
+
+    <main class="page-width">
+      <section class="explorer panel" aria-labelledby="explorer-title">
+        <div class="panel__header">
+          <div>
+            <p class="eyebrow eyebrow--dark">Recorded connections</p>
+            <h2 id="explorer-title">Explore connections</h2>
+            <p class="panel__lede">The Collection System keeps real Nodes and directed Legs together.</p>
+          </div>
+          <div class="panel__mark" aria-hidden="true">
+            <span class="panel__mark-ring panel__mark-ring--outer"></span>
+            <span class="panel__mark-ring panel__mark-ring--inner"></span>
+            <span class="panel__mark-dot"></span>
+          </div>
+        </div>
+
+        <div class="load-state" id="load-state" role="status" aria-live="polite">
+          <span class="load-state__spinner" aria-hidden="true"></span>
+          <span id="load-status">Loading the Collection System…</span>
+          <button class="button button--quiet" id="retry-button" type="button" hidden>Try again</button>
+        </div>
+
+        <div class="explorer__content" id="explorer-content" hidden>
+          <div class="explorer__toolbar">
+            <div class="field">
+              <label class="field__label" for="node-select">Choose a Node</label>
+              <select class="node-select" id="node-select" name="node">
+                <option>Loading Nodes…</option>
+              </select>
+              <p class="field__hint">Every listed Node is part of the recorded Collection System.</p>
+            </div>
+            <div class="topology-count" aria-label="Collection System size">
+              <span class="topology-count__label">Recorded Nodes</span>
+              <strong class="topology-count__value" id="node-count">—</strong>
+            </div>
+          </div>
+
+          <div class="selected-node" aria-labelledby="selected-node-title">
+            <div class="selected-node__heading">
+              <p class="eyebrow eyebrow--dark">Selected Node</p>
+              <h3 id="selected-node-title" tabindex="-1">—</h3>
+              <p class="selected-node__id" id="selected-node-id">—</p>
+            </div>
+            <span class="kind-pill" id="selected-node-kind">—</span>
+          </div>
+
+          <div class="legs-heading">
+            <div>
+              <p class="eyebrow eyebrow--dark">Directed outward</p>
+              <h3>Outgoing Legs</h3>
+            </div>
+            <span class="legs-heading__count" id="leg-count">—</span>
+          </div>
+          <p class="sr-only" id="selection-status" role="status" aria-live="polite"></p>
+          <ul class="leg-list" id="legs-list" aria-label="Outgoing Legs"></ul>
+        </div>
+      </section>
+
+      <section class="reading-note" aria-labelledby="reading-note-title">
+        <div class="reading-note__icon" aria-hidden="true">i</div>
+        <div>
+          <h2 id="reading-note-title">About these connections</h2>
+          <p>
+            This view answers “what Legs leave this Node?” A Node with no outgoing Legs
+            says only that no outgoing Leg is recorded here.
+          </p>
+        </div>
+      </section>
+
+      <section class="terms panel" aria-labelledby="terms-title">
+        <div class="terms__header">
+          <p class="eyebrow eyebrow--dark">Source notice</p>
+          <h2 id="terms-title">Denver Water data terms</h2>
+          <p>These notices travel with the collection-system source.</p>
+        </div>
+        <details class="terms__details">
+          <summary>Read both notices</summary>
+          <div class="terms__body">
+            <blockquote>
+              The water quality data is provided &quot;as is.&quot; Water quality data provided to the user is provisional and subject to change, and the user should not assume that the data has undergone any quality assurance or quality control review. Denver Water makes no warranty of any kind, express or implied, concerning the data, including accuracy, reliability, completeness, timeliness, or usefulness.<br>
+              Copyright 2026, Denver Water. <a href="https://www.denverwater.org/about-us/how-we-operate/public-records" rel="noreferrer">https://www.denverwater.org/about-us/how-we-operate/public-records</a>
+            </blockquote>
+            <blockquote>
+              COPYRIGHT AND DISCLAIMER: The data and metadata contained herein were prepared by Denver Water for its internal purposes only. Denver Water provides data and metadata as a public service with no claim as to the completeness, usefulness, timeliness or accuracy of its content, positional or otherwise. Denver Water and its employees make no warranty, express or implied, and assume no legal liability or responsibility for the ability of users to fulfill their intended purposes in accessing or using data or metadata or for omissions in content regarding such. The information provided is presented &quot;as is,&quot; without warranty of any kind, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of this information is at your own risk. In providing this information or access to it, Denver Water assumes no obligation to assist the user in the use of such information or in the development, use, or maintenance of any applications applied to or associated with the data or metadata. Any sale, reproduction or distribution of this information, or products derived therefrom, in any format is expressly prohibited.
+            </blockquote>
+            <p class="terms__sources">
+              Source links:
+              <a href="../../../data/TERMS.md">data/TERMS.md</a>
+              · <a href="https://www.denverwater.org/about-us/how-we-operate/public-records" rel="noreferrer">Denver Water public records</a>
+            </p>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer class="footer page-width">
+      <p>Fish-able · Collection System connections</p>
+      <a href="../README.md">About this model</a>
+    </footer>
+  </body>
+</html>

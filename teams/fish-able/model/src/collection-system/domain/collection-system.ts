@@ -16,6 +16,7 @@ export type Leg = Readonly<{
 export class CollectionSystem {
   readonly #nodes = new Map<string, Node>();
   readonly #outgoing = new Map<string, readonly Leg[]>();
+  readonly #nodeList: readonly Node[];
 
   constructor(nodes: readonly Node[], legs: readonly Leg[]) {
     for (const node of nodes) {
@@ -23,6 +24,7 @@ export class CollectionSystem {
       this.#nodes.set(node.id, Object.freeze({...node}));
       this.#outgoing.set(node.id, Object.freeze([]));
     }
+    this.#nodeList = Object.freeze([...this.#nodes.values()]);
 
     const ids = new Set<string>();
     for (const leg of legs) {
@@ -40,6 +42,10 @@ export class CollectionSystem {
     const node = this.#nodes.get(id);
     if (!node) throw new Error(`Unknown Node: ${id}`);
     return node;
+  }
+
+  nodes(): readonly Node[] {
+    return this.#nodeList;
   }
 
   legsFrom(id: Node['id']): readonly Leg[] {

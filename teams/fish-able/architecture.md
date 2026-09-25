@@ -39,5 +39,6 @@ translation stays in adapters outside domain models, and camera/animation stays 
 presentation. Direct domain queries do not need orchestration wrappers.
 
 The directory layout, dependency rules and CollectionSystem call flow are in
-[`model/README.md`](model/README.md#internal-structure). Only Collection System
-topology is implemented; Journey and Readings have reserved layer directories.
+[`model/README.md`](model/README.md#internal-structure). Collection System
+topology, loading and browser exploration are implemented; Journey and Readings
+have reserved layer directories.
