@@ -1,0 +1,24 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({headless:true});try{
+ const page=await browser.newPage({viewport:{width:1440,height:1120}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(process.env.DEMO_URL||'http://localhost:8766/teams/fish-able/journey/');await page.waitForSelector('#scenery[data-ready=true]');
+ assert.equal(await page.locator('#scenery').getAttribute('data-perspective'),'first-person');
+ assert.equal(await page.locator('.terrain-fish').isVisible(),false);
+ await page.selectOption('#episode','2023');await page.selectOption('#starting','sntl-531');await page.click('#start');
+ await page.click('[data-leg=headwaters]');await page.waitForTimeout(700);
+ const eye=await page.locator('#scenery').getAttribute('data-eye-location');await page.waitForTimeout(700);
+ assert.notEqual(await page.locator('#scenery').getAttribute('data-eye-location'),eye);
+ const sameEvents=await page.evaluate(()=>{const before=document.getElementById('events').textContent;document.getElementById('perspective').click();return before===document.getElementById('events').textContent;});
+ assert.equal(await page.locator('.terrain-fish').isVisible(),true);assert.equal(sameEvents,true);
+ await page.click('#perspective');assert.equal(await page.locator('.terrain-fish').isVisible(),false);
+ await page.click('#restart');await page.waitForTimeout(9000);
+ assert.ok(Number(await page.locator('#scenery').getAttribute('data-eye-pitch'))>=75);
+ assert.match(await page.locator('#location').textContent(),/Hoosier/);assert.equal(await page.locator('#event-count').textContent(),'2 events');
+ await page.click('#start');await page.screenshot({path:'.context/fish-eye.png',fullPage:true});
+ await page.click('#extent');assert.equal(await page.locator('#scenery').getAttribute('data-perspective'),'overview');
+ await page.click('#perspective');assert.equal(await page.locator('#scenery').getAttribute('data-perspective'),'first-person');
+ await page.click('#view-mode');assert.equal(await page.locator('#perspective').isDisabled(),true);await page.click('#view-mode');
+ assert.equal(await page.locator('#fish-eye-overlay').isVisible(),true);assert.deepEqual(errors,[]);
+ console.log('PASS: default fish-eye, camera follows moving fish, view switching preserves events, restart cancels travel, overview and 2D switches.');
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});
