@@ -24,6 +24,10 @@ Marston treatment plant. The 3D camera follows the fish downstream; “Show full
 returns to the overview. Restart keeps the selections and clears the Journey.
 Replay automatically repeats the same choices, dates and Readings, including an
 unsuccessful final choice. The event log uses the requested domain event names.
+Use the Fish speed slider to adjust animation from 0.05× to 1× in 0.05× steps, including during
+a Leg or replay. The setting stays selected when restarting. It applies to both
+3D and 2D views without changing Journey dates or Readings; reduced-motion mode
+continues to skip the traversal animation.
 
 ## Infrastructure evidence and scope
 

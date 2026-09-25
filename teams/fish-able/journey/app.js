@@ -3,6 +3,7 @@ import {Journey} from './model.js';
 const $ = id => document.getElementById(id);
 const svgNS = 'http://www.w3.org/2000/svg';
 let scenery;
+let fishSpeed = 1;
 let data, journey, generation = 0, fullView = false, replaying = false;
 const el = (tag, attrs = {}) => {const n = document.createElementNS(svgNS, tag); for (const [k,v] of Object.entries(attrs)) n.setAttribute(k,v); return n;};
 const nodeById = id => data.nodes.find(n => n.id === id);
@@ -111,10 +112,12 @@ async function traverse(id){
   scenery?.prepare(pending.leg);
   const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?0:scenery?.enabled?(scenery.firstPerson?8000:5000):1600;
   await new Promise(resolve=>{
-    const begin=performance.now();
+    let previous=performance.now(), elapsed=0;
     function frame(now){
       if(token!==generation){resolve();return;}
-      const t=duration?Math.min(1,(now-begin)/duration):1;
+      elapsed+=(now-previous)*fishSpeed;
+      previous=now;
+      const t=duration?Math.min(1,elapsed/duration):1;
       scenery?.progress(t);
       const p=motion.getPointAtLength(t*len),q=motion.getPointAtLength(Math.min(len,t*len+1));
       const angle=t===1?0:Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
@@ -140,6 +143,11 @@ async function load(){
   for(const e of data.episodes){const o=text('option',e.name);o.value=e.id;$('episode').append(o);}
   $('episode').addEventListener('change',configureEpisode);$('starting').addEventListener('change',preview);$('departure').addEventListener('change',preview);
   $('setup').addEventListener('submit',e=>{e.preventDefault();start();});$('restart').addEventListener('click',restart);$('replay').addEventListener('click',replay);
+  $('fish-speed').addEventListener('input',event=>{
+    fishSpeed=Number(event.target.value);
+    $('fish-speed-value').value=`${fishSpeed}×`;
+    event.target.setAttribute('aria-valuetext',`${fishSpeed} times normal speed`);
+  });
   $('fixture').addEventListener('change',restart);$('extent').addEventListener('click',()=>{if(journey?.state==='traversing')return;fullView=!fullView;drawMap();scenery?.update(journey,fullView);});render();
   const mode=$('view-mode');
   function set3D(enabled){
