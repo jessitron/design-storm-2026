@@ -1,18 +1,21 @@
 # Fish-able
 
 Bounded context for team fish-able's take on Scenario 3: visualizing a single
-journey of water and its quality data from a snow station, through the collection
-system, to a treatment plant. This is a subset of the wider repo's vocabulary —
+journey of water and its quality data from a Node the viewer picks, through
+the collection system, to a treatment plant. This is a subset of the wider
+repo's vocabulary —
 we don't model the prediction pipeline or the 3D map's data plumbing, only the
 journey itself and what makes each number on it trustworthy.
 
 ## Language
 
 **Node**:
-A real, physical place in the collection system — a snow station, streamflow
-gage, reservoir, or treatment plant — that a Journey can pass through. A Node can
+A real, physical place in the collection system — a streamflow gage,
+reservoir, or treatment plant — that a Journey can pass through. A Node can
 have more than one Leg in and more than one Leg out (confluences and forks are
-both real).
+both real). SNOTEL snow stations aren't Nodes: this context's Collection
+System starts downstream of them, at the first gage or reservoir with a flow
+or water-quality reading.
 _Avoid_: Station, facility, marker
 
 **Leg**:
@@ -22,20 +25,59 @@ engineered connection that genuinely exists, whether or not it currently carries
 water. Every Leg has its own baseline travel time, in whole days.
 _Avoid_: Edge, connection, link
 
-**Trace**:
-The real coordinate path a Leg follows — its meanders, its above-ground or
-below-ground stretches — pulled from USGS flowline or OSM conduit data. Not
-every Leg has one.
-_Avoid_: Geometry, path, route
+**Terrain**:
+The kind of physical medium a Leg's water travels through — River, Conduit,
+Reservoir, Tunnel, Train Tunnel, and more as the source data turns up new
+scenery — which determines what the fish sees and feels passing through it,
+independent of the Leg's travel time or Provenance. An open list: name a new
+kind whenever a Leg's real character calls for one.
+_Avoid_: Environment, biome, medium
 
-**Bore**:
-A Leg with no Trace: one drilled straight through rock, like Roberts or Moffat
-Tunnel, where no real path data exists because there is nothing to trace — the
-Continental Divide hides it. Drawn straight between portals, not as a stand-in
-for missing data but because that's what the Leg structurally is.
-_Avoid_: Tunnel (a Bore is a kind of tunnel Leg, but not every tunnel Leg need
-be a Bore, and not every Bore is literally drilled — the point is "no real path
-exists," not "underground")
+**River**:
+A Terrain of natural, flowing stream — the fish's home ground: current,
+banks, daylight. Usually backed by a Trace from USGS flowline data.
+_Avoid_: Stream, creek (real Denver Water names for specific waterways, not
+the Terrain category)
+
+**Conduit**:
+A Terrain of engineered pipe, laid rather than bored to walking scale.
+Usually backed by a Trace from OSM pipeline data, marked exposed or hidden
+per stretch.
+_Avoid_: Pipe, channel (Leg already uses "channel" loosely; Conduit is the
+precise Terrain term)
+
+**Tunnel**:
+A Terrain of bored, human- or train-scale passage through rock — walkable
+space, not a laid pipe. Aurora Rampart Tunnel No. 2 is a Tunnel with a known
+Trace; Roberts Tunnel is a Tunnel with an Unspecified one.
+_Avoid_: Bore (retired term, see Trace)
+
+**Train Tunnel**:
+A Tunnel Terrain that once carried a railroad and still shows it — tracks,
+rail-scale proportions — a different scene from a Tunnel that was never
+anything but a water passage. Moffat Tunnel is the one Leg with this
+Terrain today, its Trace Unspecified.
+_Avoid_: Rail tunnel
+
+**Reservoir**:
+A Terrain of open, still water with no single path through it — the fish
+crosses a basin, not a channel, so its Trace is Unspecified. Shown with
+underwater scenery and other fish: the Terrain itself carries enough to
+render without a path. Same word as the Node kind: a reservoir is both a
+place the fish can stop and a Terrain it can cross, the same physical
+reservoir at two levels.
+_Avoid_: Lake, basin
+
+**Trace**:
+A Leg's real coordinate path, when one is known — its meanders, its
+above-ground or below-ground stretches — pulled from USGS flowline or OSM
+conduit data. A Leg without one has an **Unspecified** Trace: real water
+moves through it, but no path has been published for it, or none exists to
+publish (Reservoir). How an Unspecified Trace gets shown — a straight line,
+an invented plausible path, something else — is not decided here.
+_Avoid_: Geometry, path, route; Bore (an earlier draft term for a Leg with
+an Unspecified Trace, retired: it smuggled in a rendering choice — "drawn
+straight," "shown as spooky pipe walls" — that hadn't been made)
 
 **Collection System**:
 The full graph of every real Node and Leg — confluences, forks, and all. Denver
@@ -46,8 +88,8 @@ _Avoid_: Corridor, network, route (Corridor was our own earlier draft term,
 retired once the graph turned out to branch)
 
 **Journey**:
-One fish's trip through the Collection System, starting at a chosen snow
-station, under a chosen Episode, ending either at a treatment plant or wherever
+One fish's trip through the Collection System, starting at any Node the
+viewer picks, under a chosen Episode, ending either at a treatment plant or wherever
 a Regime-closed Leg stops it. At a fork, the viewer picks which Leg the fish
 takes next. There is only ever one fish — "multiple Journeys running at once"
 isn't a concept this context has.
@@ -73,9 +115,9 @@ drought Regime can persist across seasons), Episode (a Regime is the category;
 an Episode is one real instance of it)
 
 **Reading**:
-A single number for a single parameter (TOC, alkalinity, SWE, cfs, water level,
+A single number for a single parameter (TOC, alkalinity, cfs, water level,
 ...), looked up for one Node on one date within an Episode, carrying its own
-Provenance. A Node's visit on a given date produces *several* Readings, one per
+Provenance. A Node's visit on a given date produces _several_ Readings, one per
 parameter, not one bundled value — so "the Reading at Foothills" is ambiguous;
 "the TOC Reading at Foothills" is not.
 _Avoid_: Value, measurement, data point ("measurement" implies Provenance is
@@ -98,13 +140,10 @@ _Avoid_: Alert, threshold breach
 
 ## Invariants
 
-- A Reading is always for exactly one parameter. A Node's visit on a date can
-  produce many Readings, never one bundled Reading covering several parameters.
 - A reachable Node always has a Reading for any date a Journey visits it —
-  Fabricated is the fallback of last resort, never a blank. "No Reading" only
-  ever means the Node isn't reachable from where the fish is.
-- Provenance is set independently per Node. There is no rule that a Fabricated
-  or Estimated Node upstream degrades what a Measured Node downstream can claim.
+  Fabricated is the fallback of last resort, never a blank.
+- Provenance is set independently per Reading. There is no rule that a Fabricated
+  or Estimated Reading upstream degrades what a Measured Reading downstream can claim.
 - Excursion is a soft note, not a hard rule: it can be computed and shown for
   any Provenance, but it only means something when the Reading behind it is
   Measured or Estimated. Flagging one on an Interpolated or Fabricated Reading
@@ -112,13 +151,13 @@ _Avoid_: Alert, threshold breach
 - A Regime-closed Leg ends the Journey there. The Journey does not continue
   past a closed Leg by any other name — shown as a dry, flopping fish.
 - Measured, Estimated, and Interpolated Readings are consistent across replays
-  of the *same* Episode — same date range, same real data, same numbers every
+  of the _same_ Episode — same date range, same real data, same numbers every
   time. Fabricated Readings are generated fresh on every execution regardless
   of Episode, because nothing real backs them to begin with.
 - A Journey's "moment" advances by whole days as the fish crosses each Leg —
   never finer, because every CSV in `data/` is daily-only. A Leg's travel time
-  is a deliberately-set property (can be 0, for a fast leg like reservoir to
-  plant) modified by the active Regime, not derived from anything else.
-- A Bore's missing Trace is never treated as a gap to fill. No Leg gets an
-  invented wiggle to look less like a straight line — a Trace is included
-  when real path data backs it, and left out otherwise.
+  is a deliberately-set property (can be 0) modified by the active Regime, not derived from anything else.
+- An Unspecified Trace means one of two different things, and Trace alone
+  can't tell you which: on a Reservoir, there is no single path to have; on
+  a Tunnel like Roberts, or a Train Tunnel like Moffat, a real path exists
+  but has never been published.
