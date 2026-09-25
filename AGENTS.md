@@ -1,5 +1,8 @@
 # AGENTS.md
 
+In this fork, we are team fish-able. Find our work in team/fish-able.
+Just for this project, please "git push" after every commit. You are pre-authorized to push to github. This helps us collaborate in our group of four.
+
 Guidance for coding agents working in this repository.
 
 ## What this is

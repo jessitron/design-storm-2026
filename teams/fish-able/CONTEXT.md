@@ -100,7 +100,7 @@ an Episode is one real instance of it)
 **Reading**:
 A single number for a single parameter (TOC, alkalinity, SWE, cfs, water level,
 ...), looked up for one Node on one date within an Episode, carrying its own
-Provenance. A Node's visit on a given date produces *several* Readings, one per
+Provenance. A Node's visit on a given date produces _several_ Readings, one per
 parameter, not one bundled value — so "the Reading at Foothills" is ambiguous;
 "the TOC Reading at Foothills" is not.
 _Avoid_: Value, measurement, data point ("measurement" implies Provenance is
@@ -123,13 +123,10 @@ _Avoid_: Alert, threshold breach
 
 ## Invariants
 
-- A Reading is always for exactly one parameter. A Node's visit on a date can
-  produce many Readings, never one bundled Reading covering several parameters.
 - A reachable Node always has a Reading for any date a Journey visits it —
-  Fabricated is the fallback of last resort, never a blank. "No Reading" only
-  ever means the Node isn't reachable from where the fish is.
-- Provenance is set independently per Node. There is no rule that a Fabricated
-  or Estimated Node upstream degrades what a Measured Node downstream can claim.
+  Fabricated is the fallback of last resort, never a blank.
+- Provenance is set independently per Reading. There is no rule that a Fabricated
+  or Estimated Reading upstream degrades what a Measured Reading downstream can claim.
 - Excursion is a soft note, not a hard rule: it can be computed and shown for
   any Provenance, but it only means something when the Reading behind it is
   Measured or Estimated. Flagging one on an Interpolated or Fabricated Reading
@@ -137,15 +134,13 @@ _Avoid_: Alert, threshold breach
 - A Regime-closed Leg ends the Journey there. The Journey does not continue
   past a closed Leg by any other name — shown as a dry, flopping fish.
 - Measured, Estimated, and Interpolated Readings are consistent across replays
-  of the *same* Episode — same date range, same real data, same numbers every
+  of the _same_ Episode — same date range, same real data, same numbers every
   time. Fabricated Readings are generated fresh on every execution regardless
   of Episode, because nothing real backs them to begin with.
 - A Journey's "moment" advances by whole days as the fish crosses each Leg —
   never finer, because every CSV in `data/` is daily-only. A Leg's travel time
-  is a deliberately-set property (can be 0, for a fast leg like reservoir to
-  plant) modified by the active Regime, not derived from anything else.
+  is a deliberately-set property (can be 0) modified by the active Regime, not derived from anything else.
 - An Unspecified Trace means one of two different things, and Trace alone
   can't tell you which: on a Reservoir, there is no single path to have; on
   a Conduit like Roberts or Moffat Tunnel, a real path exists but has never
-  been published. Terrain carries that distinction; how each case should be
-  shown is a design question this glossary leaves open.
+  been published.
