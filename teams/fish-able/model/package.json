@@ -1,0 +1,13 @@
+{
+  "name": "@fish-able/model",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "tsc && node --test dist/test/*.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2"
+  }
+}

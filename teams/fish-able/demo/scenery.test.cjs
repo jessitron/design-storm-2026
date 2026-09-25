@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({headless:true});try{
  const page=await browser.newPage({viewport:{width:1440,height:1120},reducedMotion:'reduce'});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.DEMO_URL||'http://localhost:8766/teams/fish-able/journey/');
+ await page.goto(process.env.DEMO_URL||'http://localhost:8766/teams/fish-able/demo/');
  await page.waitForSelector('#scenery[data-ready=true]');
  assert.equal(await page.locator('#scenery canvas').count(),1);
  await page.selectOption('#episode','2023');await page.selectOption('#starting','sntl-531');await page.click('#start');

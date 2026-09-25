@@ -1,5 +1,10 @@
 # Downstream · Fish-able Scenario 3
 
+Historical prototype. Its behavior and domain handoff below describe the earlier
+demo, not the accepted MVP architecture or current domain decisions. Start with
+[`../README.md`](../README.md) for active work. Do not reuse this model as the new
+implementation.
+
 A no-build fish Journey with 3D terrain scenery through a small subset of the Collection
 System. One fish, two historical Episodes, and a real downstream fork. No changes
 to Denver Water's originals, the team's CONTEXT.md, or the domain sketch.
@@ -12,9 +17,9 @@ From the repository root:
 python3 serve.py
 ```
 
-Open <http://localhost:8765/teams/fish-able/journey/>. If another workspace already
+Open <http://localhost:8765/teams/fish-able/demo/>. If another workspace already
 uses that port, run `python3 serve.py 8766` and open
-<http://localhost:8766/teams/fish-able/journey/>. The latter was used for verification
+<http://localhost:8766/teams/fish-able/demo/>. The latter was used for verification
 in this workspace. Keep this whole directory together, including `TERMS.md`.
 
 Select an Episode, Hoosier Pass as the starting Node, and a departure date. Start,
@@ -142,13 +147,13 @@ There is no arrival or alternate continuation after closure. Restart is required
 Rebuild the checked-in subset (offline, Python standard library):
 
 ```sh
-python3 teams/fish-able/journey/build_data.py
+python3 teams/fish-able/demo/build_data.py
 ```
 
 Run domain tests (Node with ES module support):
 
 ```sh
-node --experimental-default-type=module --test teams/fish-able/journey/model.test.mjs
+node --experimental-default-type=module --test teams/fish-able/demo/model.test.mjs
 ```
 
 Run browser tests with Playwright and Chromium installed externally, and serve.py
@@ -156,7 +161,7 @@ running on 8766 (or set `DEMO_URL`):
 
 ```sh
 PLAYWRIGHT_MODULE=/absolute/path/to/node_modules/playwright \
-  node teams/fish-able/journey/browser.test.cjs
+  node teams/fish-able/demo/browser.test.cjs
 ```
 
 Verified: both Episodes; complete Foothills and Marston paths; actual fork choices;
@@ -243,7 +248,7 @@ Verify first-person controls, moving camera and cancellation with:
 
 ```sh
 PLAYWRIGHT_MODULE=/absolute/path/to/node_modules/playwright \
-  node teams/fish-able/journey/fish-eye.test.cjs
+  node teams/fish-able/demo/fish-eye.test.cjs
 ```
 
 The test captures `.context/fish-eye.png`.

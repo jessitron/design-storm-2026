@@ -2,7 +2,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({headless:true});try{
  const page=await browser.newPage({viewport:{width:1440,height:1120}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.DEMO_URL||'http://localhost:8766/teams/fish-able/journey/');await page.waitForSelector('#scenery[data-ready=true]');
+ await page.goto(process.env.DEMO_URL||'http://localhost:8766/teams/fish-able/demo/');await page.waitForSelector('#scenery[data-ready=true]');
  assert.equal(await page.locator('#scenery').getAttribute('data-perspective'),'first-person');
  assert.equal(await page.locator('.terrain-fish').isVisible(),false);
  await page.selectOption('#episode','2023');await page.selectOption('#starting','sntl-531');await page.click('#start');

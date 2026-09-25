@@ -7,7 +7,7 @@ const {mkdirSync} = require('node:fs');
  try {
   const page=await browser.newPage({viewport:{width:1440,height:1120},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(process.env.DEMO_URL || 'http://localhost:8766/teams/fish-able/journey/');
+  await page.goto(process.env.DEMO_URL || 'http://localhost:8766/teams/fish-able/demo/');
   await page.selectOption('#episode','2023');await page.selectOption('#starting','sntl-531');
   const start=()=>page.click('#start');
   const go=async id=>{await page.click(`[data-leg="${id}"]`);await page.waitForFunction(()=>!document.querySelector('#choices').textContent.includes('Following the selected Leg'));};
