@@ -22,20 +22,47 @@ engineered connection that genuinely exists, whether or not it currently carries
 water. Every Leg has its own baseline travel time, in whole days.
 _Avoid_: Edge, connection, link
 
-**Trace**:
-The real coordinate path a Leg follows — its meanders, its above-ground or
-below-ground stretches — pulled from USGS flowline or OSM conduit data. Not
-every Leg has one.
-_Avoid_: Geometry, path, route
+**Terrain**:
+The kind of physical medium a Leg's water travels through — River, Conduit,
+Reservoir, or Bore — which determines what the fish sees and feels passing
+through it, independent of the Leg's travel time or Provenance.
+_Avoid_: Environment, biome, medium
+
+**River**:
+A Terrain of natural, flowing stream, backed by a real Trace from USGS
+flowline data — the fish's home ground: current, banks, daylight.
+_Avoid_: Stream, creek (real Denver Water names for specific waterways, not
+the Terrain category)
+
+**Conduit**:
+A Terrain of engineered pipe, backed by a real Trace from OSM pipeline data.
+Exposed to daylight on stretches the source data marks overhead, hidden on
+stretches it marks underground or at surface grade.
+_Avoid_: Pipe, channel (Leg already uses "channel" loosely; Conduit is the
+precise Terrain term)
+
+**Reservoir**:
+A Terrain of open, still water with no single path through it — the fish
+crosses a basin, not a channel, so no Trace exists to draw. Shown with
+underwater scenery and other fish: the missing Trace here means "no one path
+to draw," not "nothing to show." Same word as the Node kind (a reservoir is
+both a place the fish can stop and a Terrain it can cross) — deliberately,
+since it's the same physical reservoir seen at two levels.
+_Avoid_: Lake, basin
 
 **Bore**:
-A Leg with no Trace: one drilled straight through rock, like Roberts or Moffat
-Tunnel, where no real path data exists because there is nothing to trace — the
-Continental Divide hides it. Drawn straight between portals, not as a stand-in
-for missing data but because that's what the Leg structurally is.
-_Avoid_: Tunnel (a Bore is a kind of tunnel Leg, but not every tunnel Leg need
-be a Bore, and not every Bore is literally drilled — the point is "no real path
-exists," not "underground")
+A Terrain of drilled rock with no Trace, like Roberts or Moffat Tunnel — a
+real, specific path exists, but nothing about it has ever been published, so
+none can be drawn. Shown as featureless, spooky pipe walls: the missing
+Trace here means "we don't know," the opposite reason from Reservoir's.
+_Avoid_: Tunnel
+
+**Trace**:
+The real coordinate path a Leg follows — its meanders, its above-ground or
+below-ground stretches — pulled from USGS flowline or OSM conduit data. Only
+River and Conduit Terrains have one; Reservoir and Bore both lack one, for
+opposite reasons (see each).
+_Avoid_: Geometry, path, route
 
 **Collection System**:
 The full graph of every real Node and Leg — confluences, forks, and all. Denver
@@ -119,6 +146,9 @@ _Avoid_: Alert, threshold breach
   never finer, because every CSV in `data/` is daily-only. A Leg's travel time
   is a deliberately-set property (can be 0, for a fast leg like reservoir to
   plant) modified by the active Regime, not derived from anything else.
-- A Bore's missing Trace is never treated as a gap to fill. No Leg gets an
-  invented wiggle to look less like a straight line — a Trace is included
-  when real path data backs it, and left out otherwise.
+- A missing Trace is never treated as a gap to fill. No Leg gets an invented
+  wiggle to look less like a straight line — a Trace is included when real
+  path data backs it, and left out otherwise. A Bore and a Reservoir both
+  lack a Trace but are never rendered alike: a Bore's absence reads as
+  mystery (we don't know), a Reservoir's as openness (there's nothing to
+  know) — Terrain, not the presence of a Trace, decides how a Leg looks.
